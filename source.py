@@ -9,14 +9,15 @@ import os
 settings = {}
 
 
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
+
 def start_system():
     global admin, settings
-
-    def is_admin():
-        try:
-            return ctypes.windll.shell32.IsUserAnAdmin()
-        except:
-            return False
 
     system_settings = open("settings.json", 'r')
     data = json.load(system_settings)
@@ -68,8 +69,15 @@ def system():
 def check_command(cmd):
     if cmd.lower() == "":
         return
-    if cmd.lower() == "help":
+    elif cmd.lower() == "help":
         Help()
+    elif cmd.lower() == "exit":
+        exit(0)
+    elif cmd.lower() == "reset":
+        if is_admin():
+            screen()
+        else:
+            screen_noadmin()
     elif os.path.isfile(f'System_Functions/Commands\\{cmd.lower()}.py'):
         run_command(cmd.lower())
     else:

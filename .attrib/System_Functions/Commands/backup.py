@@ -1,19 +1,11 @@
 import os
 import subprocess
-import _format
+from ..Commands import _format
 
 
-def run(mode=""):
-    location = ""
-
-    if mode == "":
-        location = input("What Directory would you like to copy?: ")
-        print("\n")
-    elif "-u" in mode:
-        location = subprocess.run("echo %USERPROFILE%", shell=True, capture_output=True, text=True).stdout.replace("\n",
-                                                                                                                   "")
-    elif "-s" in mode:
-        location = "C:"
+def run():
+    location = input("What Directory would you like to copy?: ")
+    print("\n")
 
     files_list = []
     dirs_list = []
@@ -29,12 +21,7 @@ def run(mode=""):
             for file in FILES:
                 if "\\".join(PATH.split("\\")[:-1]) not in dirs_list:
                     dirs_list.append("\\".join(PATH.split("\\")[:-1]))
-                    if "-d" in mode:
-                        print("\\".join(PATH.split("\\")[:-1]) + ":")
-
                 files_list.append(file)
-                if "-f" in mode:
-                    print("\t" + file)
 
                 if PATH.replace(location, "").split("\\", 1)[0] not in dir_subs:
                     dir_subs.append(PATH.replace(location, "").split("\\", 1)[0])

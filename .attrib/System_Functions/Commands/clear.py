@@ -1,4 +1,5 @@
 import os
 
-os.system("cls")
-print("\n")
+
+def run():
+    os.system("cls")

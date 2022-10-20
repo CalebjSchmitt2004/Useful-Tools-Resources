@@ -1,2 +1,5 @@
-subprocess.run("tree", shell=True)
-print("\n")
+import subprocess
+
+
+def run():
+    subprocess.run("tree /F", shell=True)
